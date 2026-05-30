@@ -12,12 +12,15 @@
     "validate:typecheck": "tsc --noEmit --skipLibCheck"
   },
   "dependencies": {
+    "dotenv": "^17.4.2",
     "next": "16.2.6",
+    "prisma": "^7.8.0",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.0",
+    "@prisma/client": "^7.8.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
