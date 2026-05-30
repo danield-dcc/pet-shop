@@ -12,11 +12,16 @@
     "validate:typecheck": "tsc --noEmit --skipLibCheck"
   },
   "dependencies": {
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "dotenv": "^17.4.2",
+    "lucide-react": "^1.17.0",
     "next": "16.2.6",
     "prisma": "^7.8.0",
+    "radix-ui": "^1.4.3",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.0",
@@ -26,6 +31,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "lefthook": "^2.1.9",
+    "shadcn": "^4.8.3",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
