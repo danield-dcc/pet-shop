@@ -9,7 +9,7 @@
     "lint": "biome check",
     "lint:fix": "biome check --write .",
     "format": "biome format --write .",
-    "validate:typecheck": "tsx --noEmit --skipLibCheck"
+    "validate:typecheck": "tsc --noEmit --skipLibCheck"
   },
   "dependencies": {
     "next": "16.2.6",
