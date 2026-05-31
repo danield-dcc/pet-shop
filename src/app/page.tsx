@@ -48,6 +48,7 @@ function getPeriod(hour: number): AppointmentPeriodDay {
 function groupAppointmentsByPeriod(
   appointments: AppointmentPrisma[]
 ): AppointmentPeriod[] {
+  //pega todos os appointments e adiciona o items time, service e period
   const transformedAppointments = appointments?.map((item) => ({
     ...item,
     time: item.scheduleAt.toLocaleTimeString('pt-BR', {
@@ -57,7 +58,7 @@ function groupAppointmentsByPeriod(
     service: item.description,
     period: getPeriod(item.scheduleAt.getHours()),
   }));
-
+  //pega todos transformedAppointments e os filtra por periodo, em um vetor/array
   const morningAppointments = transformedAppointments.filter(
     (apt) => apt.period === 'morning'
   );
@@ -67,7 +68,7 @@ function groupAppointmentsByPeriod(
   const eveningAppointments = transformedAppointments.filter(
     (apt) => apt.period === 'evening'
   );
-
+  //retorna um array com três objetos. Cada um dos objetos possui um array com os agendamentos
   return [
     {
       title: 'Manhã',
@@ -92,6 +93,7 @@ function groupAppointmentsByPeriod(
 
 export default function Home() {
   const periods = groupAppointmentsByPeriod(appointments);
+  console.log(periods);
   return (
     <div className="bg-background-primary p-6">
       <div className="flex items-center justify-between md:mb-8">
@@ -106,7 +108,9 @@ export default function Home() {
       </div>
 
       <div className="pb-24 mb:pb-0">
+        {/* faz um map no array dos 3 objetos */}
         {periods.map((period, i) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: <map>
           <PeriodSection period={period} key={i} />
         ))}
       </div>
