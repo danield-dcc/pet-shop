@@ -1,3 +1,4 @@
+import { AppointmentForm } from '@/components/appointment-fom';
 import { PeriodSection } from '@/components/period-section';
 import { prisma } from '@/lib/prisma';
 import { groupAppointmentsByPeriod } from '@/utils/appointmentsUtils';
@@ -28,6 +29,10 @@ export default async function Home() {
           // biome-ignore lint/suspicious/noArrayIndexKey: <map>
           <PeriodSection period={period} key={i} />
         ))}
+      </div>
+
+      <div>
+        <AppointmentForm />
       </div>
     </div>
   );
