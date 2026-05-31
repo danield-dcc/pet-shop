@@ -1,5 +1,6 @@
 import { Cloudy, Moon, Sun } from 'lucide-react';
 import type { AppointmentPeriod } from '@/types/appointment';
+import { AppointmentCard } from '../appointment-card';
 
 interface PeriodSectionProps {
   period: AppointmentPeriod;
@@ -35,7 +36,7 @@ export function PeriodSection({ period }: PeriodSectionProps) {
             </div>
 
             {period.appointments.map((appointment, i) => (
-              <div key={i}>{appointment.petName}</div>
+              <AppointmentCard key={i} appointment={appointment} />
             ))}
           </div>
         </div>
