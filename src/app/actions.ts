@@ -47,8 +47,6 @@ export async function createAppointment(data: AppointmentData) {
     await prisma.appointment.create({
       data: { ...parsedData },
     });
-
-    return 'ok';
   } catch (error) {
     console.log(error);
   }

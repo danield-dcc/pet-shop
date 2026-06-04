@@ -96,11 +96,14 @@ export function AppointmentForm() {
       scheduleAt,
     });
 
-    if (result) {
-      toast.success('Agendamento criado com sucesso.');
+    if (result?.error) {
+      toast.error(result.error);
+      return;
     }
 
-    console.log(data);
+    toast.success('Agendamento criado com sucesso.');
+
+    form.reset();
   }
 
   return (
