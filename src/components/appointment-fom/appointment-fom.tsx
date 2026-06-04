@@ -11,12 +11,12 @@ import {
   Phone,
   User,
 } from 'lucide-react';
-import { useState } from 'react';
+import { type ReactNode, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IMaskInput } from 'react-imask';
 import { toast } from 'sonner';
 import { z } from 'zod';
-import { createAppointment } from '@/app/actions';
+import { createAppointment, updateAppointment } from '@/app/actions';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -36,6 +36,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
+import type { Appointment } from '@/types/appointment';
 import { Calendar } from '../ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import {
@@ -74,7 +75,15 @@ const appointmentFormSchema = z
 
 type AppointmentFormValues = z.infer<typeof appointmentFormSchema>;
 
-export function AppointmentForm() {
+interface AppointmentFormProps {
+  children?: ReactNode;
+  appointment?: Appointment;
+}
+
+export function AppointmentForm({
+  appointment,
+  children,
+}: AppointmentFormProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const form = useForm<AppointmentFormValues>({
@@ -94,27 +103,33 @@ export function AppointmentForm() {
     const scheduleAt = new Date(data.scheduleAt);
     scheduleAt.setHours(Number(hour), Number(minute), 0, 0);
 
-    const result = await createAppointment({
-      ...data,
-      scheduleAt,
-    });
+    const isEdit = !!appointment?.id;
+
+    const result = isEdit
+      ? await updateAppointment(appointment.id, { ...data, scheduleAt })
+      : await createAppointment({
+          ...data,
+          scheduleAt,
+        });
 
     if (result?.error) {
       toast.error(result.error);
       return;
     }
 
-    toast.success('Agendamento criado com sucesso.');
+    toast.success(
+      `Agendamento ${isEdit ? 'atualizado' : 'criado'} com sucesso!`
+    );
 
     setIsOpen(false);
     form.reset();
   }
-
+  useEffect(() => {
+    form.reset(appointment);
+  }, [appointment, form]);
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        <Button variant="brand">Novo Agendamento</Button>
-      </DialogTrigger>
+      {children && <DialogTrigger asChild>{children}</DialogTrigger>}
 
       <DialogContent
         variant="appointment"
