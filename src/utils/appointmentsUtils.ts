@@ -16,12 +16,10 @@ export function groupAppointmentsByPeriod(
   //pega todos os appointments e adiciona o items time, service e period
   const transformedAppointments = appointments?.map((item) => ({
     ...item,
-    time: item.scheduleAt.toLocaleTimeString('pt-BR', {
-      hour: '2-digit',
-      minute: '2-digit',
-    }),
+    time: formatDateTime(item.scheduleAt),
     service: item.description,
-    period: getPeriod(item.scheduleAt.getHours()),
+    // biome-ignore lint/correctness/useParseIntRadix: <explanation>
+    period: getPeriod(parseInt(formatDateTime(item.scheduleAt))),
   }));
   //pega todos transformedAppointments e os filtra por periodo, em um vetor/array
   const morningAppointments = transformedAppointments.filter(
@@ -66,4 +64,13 @@ export function calculatePeriod(hour: number) {
     isAfternoon,
     isEvening,
   };
+}
+
+export function formatDateTime(date: Date): string {
+  return date.toLocaleTimeString('pt-BR', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+    timeZone: 'America/Sao_Paulo',
+  });
 }
