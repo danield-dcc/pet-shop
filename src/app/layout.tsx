@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { Toaster } from 'sonner';
 import '@/styles/globals.css';
+import { Header } from '@/components/header';
 import { TooltipProvider } from '@/components/ui/tooltip';
 
 const inter = Inter({
@@ -34,8 +35,14 @@ export default function RootLayout({
       h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <TooltipProvider>{children}</TooltipProvider>
-        <Toaster position="top-right" />
+        <Header />
+
+        <div className="max-w-3xl mx-auto">
+          <main className="flex-1 flex flex-col mt-12">
+            <TooltipProvider>{children}</TooltipProvider>
+            <Toaster position="top-right" />
+          </main>
+        </div>
       </body>
     </html>
   );
